@@ -10,6 +10,7 @@ async function handleGenerateNewShortUrl(req, res) {
     redirectUrl: body.url,
     visitHistory: [],
   });
+  return res.render("home" , {id: Shortid});
   return res.status(201).json({ status: "Success", id: Shortid });
 }
 
@@ -25,7 +26,10 @@ async function handleRedirectToUrl(req, res) {
 async function handleGetAnalytics(req, res) {
   const shortId = req.params.shortId;
   const result = await URL.findOne({ shortId });
-  return res.json({ analytics: result.visitHistory });
+  return res.json({
+    Total_clicks: result.visitHistory.length,
+    analytics: result.visitHistory,
+  });
 }
 
 module.exports = {
