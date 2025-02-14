@@ -1,13 +1,18 @@
 const express = require("express");
 const path = require("path");
+const cookie_parser = require("cookie-parser");
+
 const { connectMongoDb } = require("./connect");
+
 const {router} = require("./routes/url");
 const staticRouter = require("./routes/staticRouter");
 const userRouter = require("./routes/userRouter")
-const exp = require("constants");
+
+const {restrictToLoggedUserOnly , checkAuth} = require("./middlewares/auth")
+
 
 const app = express();
-const port = 8001;
+const port = 8002;
 
 connectMongoDb("mongodb://localhost:27017/url-shortener");
 
@@ -16,10 +21,11 @@ app.set("views" , path.resolve("./views") )
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+app.use(cookie_parser())
 
-app.use("/url" , router);
+app.use("/" ,checkAuth , staticRouter);
 app.use("/user" , userRouter)
-app.use("/" , staticRouter);
+app.use("/url" , restrictToLoggedUserOnly ,  router); // inline middleware
 
 app.listen(port, () => {
   console.log(`Server started at port ${port}`);
