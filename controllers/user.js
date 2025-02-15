@@ -23,11 +23,15 @@ async function handleUserLogin(req,res)
     // res.cookie("uid" , sessionId);
 
     const token = setUser(user);
+<<<<<<< HEAD
     // return res.json({token});
     res.cookie("uid" , token);
     // res.cookie("uid" , token , {
     //     domain : "www.google.com"
     // }); // if the domain name is something differnent from your website , cookies won't be sent to your website's server
+=======
+    res.cookie("uid" , token);
+>>>>>>> f1e87601026f1736e7db3f2824279d87f9f47dbb
     return res.redirect("/");
 }
 
