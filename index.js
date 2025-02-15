@@ -12,7 +12,7 @@ const {restrictToLoggedUserOnly , checkAuth} = require("./middlewares/auth")
 
 
 const app = express();
-const port = 8002;
+const port = 8001;
 
 connectMongoDb("mongodb://localhost:27017/url-shortener");
 
