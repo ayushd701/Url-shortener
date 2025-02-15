@@ -2,7 +2,7 @@ const express = require("express");
 const URL = require("../models/url");
 const staticRouter = express.Router();
 
-staticRouter.get("/" ,async (req,res) => {
+staticRouter.get("/",async (req,res) => {
     if(!req.user) return res.redirect("/login");
     const allUrls = await URL.find({ createdBy : req.user._id });
     return res.render("home" , { urls : allUrls ,});
